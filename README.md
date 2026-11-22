@@ -22,7 +22,7 @@
 
 ## Description
 
-**HoneyPotBadlands** protège un salon Discord : tout message d'un utilisateur non autorisé y est supprimé et son auteur expulsé du serveur. Une liste blanche exempte les utilisateurs de confiance.
+**HoneyPotBadlands** protège un salon Discord : tout utilisateur non autorisé qui y écrit est expulsé du serveur, et ses 10 derniers messages (tous salons confondus, message du piège inclus) sont supprimés. Une liste blanche exempte les utilisateurs de confiance, et les membres ayant la permission « Gérer les messages » sont automatiquement ignorés.
 
 ## Installation
 
@@ -30,7 +30,7 @@
 git clone https://github.com/KowzeFW/HoneyPotBadlands.git
 cd HoneyPotBadlands
 npm install
-cp .env.example .env
+cp .env.exemple .env
 ```
 
 Prérequis : Node.js 24+, un bot Discord et un serveur sur lequel l'installer.
@@ -43,7 +43,7 @@ Renseignez ces variables dans `.env` :
 |---|---|
 | `DISCORD_TOKEN` | Token de votre bot Discord |
 | `CHANNEL_ID` | ID du salon à protéger |
-| `WHITELIST` | IDs des utilisateurs autorisés, séparés par des virgules |
+| `WHITELIST_ID_1`, `WHITELIST_ID_2` | IDs des utilisateurs autorisés à écrire dans le salon |
 
 ## Utilisation
 
@@ -51,11 +51,11 @@ Renseignez ces variables dans `.env` :
 npm start
 ```
 
-Le bot surveille automatiquement le salon configuré : les utilisateurs de la liste blanche peuvent écrire librement, les autres voient leur message supprimé et sont expulsés.
+Le bot surveille automatiquement le salon configuré : les utilisateurs de la liste blanche peuvent écrire librement, les autres sont expulsés et leurs 10 derniers messages sont supprimés.
 
 ## Permissions Discord
 
-**Permissions du bot** : Voir les salons, Voir les anciens messages, Envoyer des messages, Gérer les messages, Expulser des membres.
+**Permissions du bot** : Voir les salons, Voir les anciens messages, Gérer les messages, Expulser des membres. Ces permissions doivent s'appliquer dans tous les salons où le bot doit retrouver et supprimer des messages ; sinon ces salons sont ignorés (un avertissement est affiché dans la console). Le rôle du bot doit aussi être placé au-dessus de celui des membres à expulser.
 
 **Intents à activer** (Discord Developer Portal) : `Server Members Intent`, `Message Content Intent`.
 
